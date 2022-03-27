@@ -11,6 +11,7 @@ const GetPokemons = () => {
       name: poke.name,
       id: poke.id,
       image: poke.sprites["front_default"],
+      type: poke.types.map((type) => type.type.name),
     }));
     Makelist(pokemon);
   });
@@ -22,12 +23,11 @@ function Makelist(object) {
     .map(
       (individual) => `<li>
     <div class="Card">
-    <div class="Card-img">
-    <img src="${individual.image}" alt="${individual.id}">
-    </div>
+    <img class="Card-img" src="${individual.image}" alt="${individual.id}">
     <div class="Card-info">
  
-    <h3>${individual.name}</h3>
+    <h3 class = "PokeName" id="${individual.name}">${individual.name}</h3>
+    <p class = "PokeType">${individual.type}</p>
     </div>
     <div class="Card-id">
     <h2>${individual.id}</h2>
@@ -45,13 +45,25 @@ const button = document.getElementById("searchButton");
 
 button.addEventListener("click", (e) => {
   e.preventDefault();
-  const input = document.getElementById("searchInput").value;
-  const image = document.querySelector(`[alt="${input}"]`);
-  const Card = image.parentElement.parentElement;
+  const inputID = document.getElementById("searchInputID").value;
+  const inputName = document.getElementById("searchInputName").value;
+  const image = document.querySelector(`[alt="${inputID}"]`);
+  const name = document.querySelector(`[id="${inputName}"]`);
 
-  window.scrollTo(0, image.offsetTop - 400);
-  Card.classList.add("bouncer");
-  setTimeout(() => {
-    Card.classList.remove("bouncer");
-  }, 2000);
+  if (image) {
+    const Card = image.parentElement.parentElement;
+    window.scrollTo(0, image.offsetTop - 400);
+    Card.classList.add("bouncer");
+    setTimeout(() => {
+      Card.classList.remove("bouncer");
+    }, 2000);
+  }
+  if (name) {
+    const Card = name.parentElement.parentElement;
+    window.scrollTo(0, name.offsetTop - 400);
+    Card.classList.add("bouncer");
+    setTimeout(() => {
+      Card.classList.remove("bouncer");
+    }, 2000);
+  }
 });
